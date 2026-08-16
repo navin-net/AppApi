@@ -26,4 +26,27 @@ public class CategoryServiceImpl implements CategoryService {
     public Category getCategoryById(Integer id) {
         return categoryRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public void Create(Category category) {
+        category.setId(0);
+        category.setStatus("ACT");
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void Update(Category category) {
+        if (getCategoryById(category.getId()) != null){
+            categoryRepository.save(category);
+        }
+    }
+
+    @Override
+    public void Delete(Integer id) {
+        if (categoryRepository.existsById(id)) {
+            categoryRepository.deleteById(id);
+        }
+    }
+
+
 }
