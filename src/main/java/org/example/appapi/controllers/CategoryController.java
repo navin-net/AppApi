@@ -9,10 +9,7 @@ import org.example.appapi.services.CategoryService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -66,32 +63,11 @@ public class CategoryController {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @PostMapping("/api/categories/create")
-    public ResponseEntity<Object> create(@RequestBody Category req){
+    public ResponseEntity<Object> createCategory(@RequestBody Category req){
         try{
+            log.info("Intercept Create category  {}",req);
+            categoryService.Create(req);
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         } catch (Throwable e) {
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
@@ -99,9 +75,29 @@ public class CategoryController {
     }
 
 
+    @PostMapping("/api/categories/update")
+    public ResponseEntity<Object> updateCategory(@RequestBody Category req){
+        try{
+            log.info("Intercept Update  {}",req);
+            categoryService.Update(req);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (Throwable e) {
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        }
+    }
 
+    @DeleteMapping("/api/categories/delete/{id}")
+    public ResponseEntity<Object> deleteCategory(@PathVariable("id") Integer id) {
+        try {
+            log.info("Intercept Delete  {}",id);
+            categoryService.Delete(id);
+            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error deleting category {}", id, e);
 
-
+            return new ResponseEntity<>(baseResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }
