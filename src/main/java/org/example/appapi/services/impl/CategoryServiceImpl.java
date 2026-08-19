@@ -1,7 +1,6 @@
 package org.example.appapi.services.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.appapi.exceptions.WebException;
 import org.example.appapi.model.Category;
 import org.example.appapi.repositories.CategoryRepository;
 import org.example.appapi.services.CategoryService;
@@ -29,19 +28,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void Create(Category category) throws WebException{
-        var checkCategoryName = categoryRepository.findByName(category.getName());
-        if (checkCategoryName.isPresent()){
-            throw new WebException(
-                    "Category have already exists.",
-                    "ប្រភេទមានរួចហើយ។",
-                    "ERR-001"
-            );
-        }
+    public void Create(Category category) {
         category.setId(0);
         category.setStatus("ACT");
         categoryRepository.save(category);
-
     }
 
     @Override
