@@ -11,7 +11,4 @@ public class BaseResponse {
     private String message;
     private String messageKh;
     private Object data;
-
-
-
 }
