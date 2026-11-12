@@ -1,108 +1,116 @@
-# School Management System — AppApi
+# SmartRestaurantPos 🍽️
 
-> **Status:** 🚧 Early stage — this is just the **first step** of the School Management System project. The API currently covers the foundational features, with more modules planned as development continues.
+**SmartRestaurantPos** is a Restaurant Management and Point of Sale (POS) system built with **Java 21 and Spring Boot**. The project aims to simplify restaurant operations by providing a centralized REST API for managing users, restaurant information, products, orders, tables, payments, and inventory.
 
-## About the Project
+The system follows a layered architecture and applies object-oriented programming principles, secure authentication, and role-based authorization to create a maintainable and scalable backend application.
 
-**AppApi** is the backend API for a School Management System. The goal of the full system is to help schools manage students, teachers, classes, attendance, grades, and administrative workflows in one place.
+## 🎯 Project Objectives
 
-This repository represents the **first milestone**: the core API structure, basic entities, and initial endpoints. It's a starting point — not a finished product — and is being built out incrementally.
+- Simplify restaurant management and daily operations.
+- Manage restaurant staff and access permissions.
+- Organize products, categories, and restaurant tables.
+- Manage customer orders and order processing.
+- Support POS operations and payment management.
+- Track inventory and stock movements.
+- Provide structured REST APIs for future frontend integration.
 
-## Repository
+## ✨ Key Features
 
-```
-https://github.com/navin-net/AppApi
-```
+### 1. Authentication & Authorization
+- User registration and login.
+- JWT-based authentication.
+- Role-Based Access Control (RBAC).
+- Secure password hashing.
+- Token version management for token invalidation.
+- Owner-controlled account registration and permissions.
 
-## Project Roadmap
+### 2. Restaurant Management
+- Manage restaurant information.
+- Manage restaurant branches.
+- Manage staff accounts and roles.
 
-- [x] Initial project setup and structure
-- [x] Core API scaffolding
-- [ ] Student management module
-- [ ] Teacher/staff management module
-- [ ] Class & subject management
-- [ ] Attendance tracking
-- [ ] Grades & report cards
-- [ ] Authentication & role-based access (Admin, Teacher, Student, Parent)
-- [ ] Notifications
-- [ ] Frontend/client integration
+### 3. Product Management
+- Create, update, and delete products.
+- Organize products by categories.
+- Manage product pricing and availability.
 
-> This roadmap will be updated as the project evolves. Feel free to open an issue to suggest a feature or check progress.
+### 4. Table Management
+- Manage restaurant tables.
+- Track table availability and status.
+- Support table-based ordering.
 
-## Tech Stack
+### 5. Order Management
+- Create and manage customer orders.
+- Track order status.
+- Support kitchen order processing.
+- Manage order details and quantities.
 
-- **Language:** Java 17
-- **Build Tool:** Maven
-- **Framework:** _(e.g., Spring Boot — update if different)_
-- **Database:** _(e.g., MySQL / PostgreSQL)_
-- **ORM:** _(e.g., Spring Data JPA / Hibernate)_
-- **Authentication:** _(e.g., JWT / Spring Security)_
+### 6. POS & Payment Management
+- Process customer orders.
+- Calculate order totals.
+- Manage payment records.
+- Track sales transactions.
 
-## Getting Started
+### 7. Inventory Management
+- Track stock quantities.
+- Manage ingredients and supplies.
+- Monitor stock movements.
 
-### Prerequisites
+### 8. Reports & Dashboard
+- Monitor restaurant sales.
+- View order summaries.
+- Track business performance.
 
-- [ ] JDK 17 installed
-- [ ] Maven installed (or use the included `mvnw` wrapper, if present)
-- [ ] A database server running locally or accessible remotely
-- [ ] Git
+## 🛠️ Technology Stack
 
-### Installation
+| Technology | Purpose |
+|---|---|
+| Java 21 | Programming language |
+| Spring Boot 4.1.2 | Backend framework |
+| Spring Data JPA | Database operations |
+| Hibernate | ORM |
+| Spring Security | Authentication and authorization |
+| JWT | Token-based authentication |
+| PostgreSQL | Relational database |
+| Maven | Dependency management |
+| Docker & Docker Compose | Containerization |
+| Postman | API testing |
+| Lombok | Reduce boilerplate code |
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/navin-net/AppApi.git
-   cd AppApi
-   ```
+## 🏗️ Architecture
 
-2. Build the project and install dependencies:
-   ```bash
-   mvn clean install
-   ```
-   Or, if using the Maven wrapper:
-   ```bash
-   ./mvnw clean install
-   ```
+The application follows a layered architecture:
 
-3. Configure your database connection and other settings in `src/main/resources/application.properties` (or `application.yml`).
+Controller → Service → Repository → Database
 
-4. Apply database migrations, if applicable (e.g., via Flyway/Liquibase, or let JPA/Hibernate handle schema generation).
+- **Controller:** Handles HTTP requests and API responses.
+- **Service:** Contains business logic and application rules.
+- **Repository:** Handles database operations.
+- **Entity:** Represents database tables.
+- **DTO:** Transfers data between API layers.
+- **Security:** Handles authentication and authorization.
+- **Exception Handler:** Provides consistent error responses.
 
-5. Run the project:
-   ```bash
-   mvn spring-boot:run
-   ```
-   Or run the packaged jar:
-   ```bash
-   java -jar target/AppApi-0.0.1-SNAPSHOT.jar
-   ```
+## 🔐 Security Design
 
-The API should now be running at `http://localhost:8080` (or your configured port).
+The system uses role-based permissions to control access to restaurant resources.
 
-## API Endpoints
+Planned roles include:
+- OWNER
+- ADMIN
+- CASHIER
+- WAITER
+- KITCHEN
 
-> This section is a placeholder — fill in as endpoints are added.
+Only the OWNER is permitted to create ADMIN and STAFF accounts through the protected registration workflow.
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | `/api/students` | Get list of students |
-| POST   | `/api/students` | Add a new student |
-| GET    | `/api/teachers` | Get list of teachers |
+## 🚀 Development Status
 
-## Contributing
+SmartRestaurantPos is an ongoing backend development project. Features are being implemented incrementally, with a focus on secure authentication, clean architecture, database design, and reliable business logic.
 
-This project is in its early stages, and contributions, suggestions, and feedback are welcome!
+## 👨‍💻 Developer
 
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m "Add some feature"`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
+Developed by **Navin**.
 
-## Contact
+GitHub: https://github.com/navin-net
 
-Maintained by [navin-net](https://github.com/navin-net). Feel free to open an issue for questions, bugs, or feature requests.
-
----
-
-*This is the first step of a larger project — thanks for checking it out! ⭐ Star the repo if you'd like to follow its progress.*
