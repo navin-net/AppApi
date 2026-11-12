@@ -1,29 +1,31 @@
 package org.example.appapi.exceptions;
 
-
 import lombok.Getter;
 
 @Getter
 public class WebException extends RuntimeException {
 
-    private String message;
-    private String messageKh;
-    private String code;
+    private final ErrorCode errorCode;
+    private final String detail;
 
+    public WebException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+        this.detail = null;
 
-    public WebException() {
-        super();
     }
 
-    public WebException(String message,  String messageKh, String code) {
-        super(message);
-        this.message = message;
-        this.messageKh = messageKh;
-        this.code = code;
+    // Adds detail to the English message, e.g. "Category not found: 5"
+    public WebException(ErrorCode errorCode, String detail) {
+        super(errorCode.getMessage() + ": " + detail);
+        this.errorCode = errorCode;
+        this.detail = detail;
+
     }
 
-
-
-
-
+    public WebException(ErrorCode errorCode, Throwable cause) {
+        super(errorCode.getMessage(), cause);
+        this.errorCode = errorCode;
+        this.detail = null;
+    }
 }
