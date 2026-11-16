@@ -42,6 +42,7 @@ public class RestaurantController {
         return ResponseEntity.ok(BaseResponse.success(
                 "Create restaurant success", restaurantService.save(request)));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponse> update(@PathVariable Integer id,
                                                @Valid @RequestBody RestaurantRequest request) {
@@ -51,8 +52,9 @@ public class RestaurantController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> delete(@PathVariable Integer id) {
-        restaurantService.delete(id);
-        return ResponseEntity.ok(BaseResponse.success("Delete restaurant success", restaurantService.getById(id)));
+            restaurantService.delete(id);
+        return ResponseEntity.ok(BaseResponse.success(
+                "Delete restaurant success", restaurantService.getById(id)));
     }
 
 

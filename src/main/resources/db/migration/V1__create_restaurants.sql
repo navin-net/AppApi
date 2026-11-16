@@ -1,5 +1,5 @@
 CREATE TABLE sma_restaurants (
-    id          BIGSERIAL PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
     name        VARCHAR(150) NOT NULL,
     phone       VARCHAR(30),
     email       VARCHAR(150),

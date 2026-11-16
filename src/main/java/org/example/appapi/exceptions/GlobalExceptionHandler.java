@@ -1,9 +1,10 @@
 package org.example.appapi.exceptions;
 
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.appapi.dto.response.BaseResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -86,6 +87,20 @@ public class GlobalExceptionHandler {
         log.error("Unexpected error", e);
         return build(ErrorCode.INTERNAL_ERROR, ErrorCode.INTERNAL_ERROR.getMessage());
     }
+
+    // Permission missing (@PreAuthorize)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<BaseResponse<Void>> handleAccessDenied(AccessDeniedException e) {
+        log.warn("Access denied: {}", e.getMessage());
+        return build(ErrorCode.FORBIDDEN, ErrorCode.FORBIDDEN.getMessage());
+    }
+
+    // Anything else from Spring Security authentication
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<BaseResponse<Void>> handleAuthentication(AuthenticationException e) {
+        return build(ErrorCode.UNAUTHORIZED, ErrorCode.UNAUTHORIZED.getMessage());
+    }
+
 
     private ResponseEntity<BaseResponse<Void>> build(ErrorCode ec, String message) {
         return ResponseEntity.status(ec.getStatus())

@@ -1,0 +1,7 @@
+CREATE TABLE sma_roles (
+    id            SERIAL PRIMARY KEY,
+    name          VARCHAR(50) NOT NULL,   -- OWNER, ADMIN, CASHIER, WAITER, KITCHEN
+    description   VARCHAR(255),
+    created_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

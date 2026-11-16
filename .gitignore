@@ -29,5 +29,14 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Local environment settings and credentials
+.env
+.env.*
+!.env.example
+
 ### VS Code ###
 .vscode/
+
+# macOS
+.DS_Store
+**/.DS_Store
