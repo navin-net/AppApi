@@ -2,6 +2,7 @@ services:
   - type: web
     name: appapi
     runtime: docker
+    plan: free
     dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_DATASOURCE_URL
