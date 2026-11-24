@@ -6,6 +6,8 @@ import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.example.appapi.dto.response.BaseResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -79,6 +81,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<BaseResponse<Void>> handleNoResource(NoResourceFoundException e) {
         return build(ErrorCode.NOT_FOUND, ErrorCode.NOT_FOUND.getMessage());
+    }
+
+    @ExceptionHandler(DataAccessException.class)
+    public ResponseEntity<BaseResponse<Void>> handleDatabaseFailure(DataAccessException e) {
+        log.error("Database operation failed", e);
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(BaseResponse.error(
+                        "DATABASE_UNAVAILABLE",
+                        "Database is temporarily unavailable.",
+                        "មូលដ្ឋានទិន្នន័យមិនអាចប្រើបានជាបណ្តោះអាសន្ន។"
+                ));
     }
 
     // Anything unexpected: log fully, hide details from the client
