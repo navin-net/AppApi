@@ -1,0 +1,77 @@
+
+name: AppApi - Production Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  test:
+    name: Test Spring Boot
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Java 26
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '26'
+          cache: maven
+
+      - name: Run tests
+        run: ./mvnw -B test
+
+  deploy:
+    name: Verify Render Deployment
+    needs: test
+    runs-on: ubuntu-latest
+
+    environment:
+      name: production
+
+    steps:
+      - name: Wait for Render deployment
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ vars.RENDER_SERVICE_ID }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          for i in {1..20}; do
+            echo "Checking Render deployment ($i/20)..."
+
+            RESPONSE=$(curl -fsS \
+              -H "Authorization: Bearer $RENDER_API_KEY" \
+              -H "Accept: application/json" \
+              "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys?limit=20")
+
+            STATUS=$(echo "$RESPONSE" | jq -r \
+              --arg sha "$COMMIT_SHA" \
+              '[.[] | select(.deploy.commit.id == $sha) | .deploy.status][0] // empty')
+
+            echo "Render status: ${STATUS:-waiting}"
+
+            if [ "$STATUS" = "live" ]; then
+              echo "Render deployment is LIVE!"
+              exit 0
+            fi
+
+            if [[ "$STATUS" =~ ^(build_failed|update_failed|pre_deploy_failed|canceled)$ ]]; then
+              echo "Render deployment failed: $STATUS"
+              exit 1
+            fi
+
+            sleep 30
+          done
+
+          echo "Timed out waiting for Render deployment."
+          exit 1
