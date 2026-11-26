@@ -18,15 +18,24 @@ jobs:
     name: Test Spring Boot
     runs-on: ubuntu-latest
 
+    env:
+      PORT: 8280
+      JWT_MINUTES: 60
+      SPRING_DATASOURCE_URL: ${{ secrets.TEST_DATASOURCE_URL }}
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.TEST_DATASOURCE_USERNAME }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.TEST_DATASOURCE_PASSWORD }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      SEED_OWNER_PASSWORD: ${{ secrets.SEED_OWNER_PASSWORD }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v5
 
-      - name: Setup Java 26
+      - name: Setup Java 21
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '26'
+          java-version: '21'
           cache: maven
 
       - name: Run Tests
