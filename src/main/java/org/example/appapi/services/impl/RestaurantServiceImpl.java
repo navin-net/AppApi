@@ -50,9 +50,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant update(Integer id, RestaurantRequest request) {
 
         Restaurant restaurant = getById(id);
-        if(restaurantRepository.existsByNameIgnoreCase(request.getName().trim())) {
-            throw new WebException(ErrorCode.DUPLICATE_DATA);
-        }
+//        if(restaurantRepository.existsByNameIgnoreCase(request.getName().trim())) {
+//            throw new WebException(ErrorCode.DUPLICATE_DATA);
+//        }
         apply(restaurant, request);
         return restaurantRepository.save(restaurant);
     }

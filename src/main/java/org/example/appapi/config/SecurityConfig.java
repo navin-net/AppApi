@@ -34,7 +34,7 @@ public class SecurityConfig {
                     var config = new org.springframework.web.cors.CorsConfiguration();
 
                     config.setAllowedOrigins(
-                            java.util.List.of("https://appapi-zv12.onrender.com/api/v1/restaurants")
+                            java.util.List.of("https://learn-react.netnavin70.workers.dev/")
                     );
 
                     config.setAllowedMethods(

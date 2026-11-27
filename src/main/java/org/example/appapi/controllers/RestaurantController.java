@@ -39,6 +39,7 @@ public class RestaurantController {
 
     @PostMapping("/create")
     public ResponseEntity<BaseResponse> create(@Valid @RequestBody RestaurantRequest request) {
+        log.info("Create restaurant {}", request);
         return ResponseEntity.ok(BaseResponse.success(
                 "Create restaurant success", restaurantService.save(request)));
     }
@@ -46,6 +47,7 @@ public class RestaurantController {
     @PutMapping("/{id}")
     public ResponseEntity<BaseResponse> update(@PathVariable Integer id,
                                                @Valid @RequestBody RestaurantRequest request) {
+        log.info("Update restaurant by id {}", id);
         return ResponseEntity.ok(BaseResponse.success(
                 "Update restaurant success", restaurantService.update(id, request)));
     }
