@@ -19,10 +19,12 @@ public class HealthController {
     }
 
     @GetMapping("/")
-    public String helloWorld() {
-        return "Hello World";
+    public Map<String, String> home() {
+        return Map.of(
+                "application", "AppApi",
+                "status", "running",
+                "message", "API is running. See /api/allcategories for an available endpoint.");
     }
-
     @GetMapping("/api/health")
     public ResponseEntity<Map<String, String>> health() {
         try {
